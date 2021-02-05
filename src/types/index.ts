@@ -1,14 +1,15 @@
 export interface IPost {
-  postId: number;
+  userId: number;
   id: number;
-  name: string;
-  email: string;
+
+  title: string;
   body: string;
 }
 export interface IComment {
-  userId: number;
   id: number;
-  title: string;
+  postId: number;
+  name: number;
+  email: string;
   body: string;
 }
 export interface IUser {}
