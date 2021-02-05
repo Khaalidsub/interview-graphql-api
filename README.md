@@ -26,7 +26,7 @@ graphapi
 ### Run Project Normally
 
 ```
-yarn install
+yarn install OR npm install
 
-yarn start:dev OR yarn start
+yarn start:dev OR npm start
 ```
