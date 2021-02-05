@@ -1,18 +1,20 @@
-import { Resolver, Query, Args, Int } from '@nestjs/graphql';
-import { PostsService } from './posts.service';
+import { Resolver, Query, Args, Int, Context } from '@nestjs/graphql';
 import { Post } from './entities/post.entity';
-
+import { IDatasource } from 'src/types';
 @Resolver(() => Post)
 export class PostsResolver {
-  constructor(private readonly postsService: PostsService) {}
+  constructor() {}
 
   @Query(() => [Post], { name: 'posts' })
-  findAll() {
-    return this.postsService.findAll();
+  findAll(@Context('dataSources') { postsAPI }: IDatasource) {
+    return postsAPI.findAll();
   }
 
   @Query(() => Post, { name: 'post' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
-    return this.postsService.findOne(id);
+  findOne(
+    @Args('id', { type: () => Int }) id: number,
+    @Context('dataSources') { postsAPI }: IDatasource,
+  ) {
+    return postsAPI.findOne(id);
   }
 }

@@ -1,15 +1,20 @@
-import { HttpService, Injectable } from '@nestjs/common';
-import { AxiosResponse } from 'axios';
+import { Injectable } from '@nestjs/common';
+import { RESTDataSource } from 'apollo-datasource-rest';
 import { Post } from './entities/post.entity';
 @Injectable()
-export class PostsService {
+export class PostsService extends RESTDataSource {
   private _URL = 'https://jsonplaceholder.typicode.com/posts';
-  constructor(private httpService: HttpService) {}
-  findAll(): Promise<AxiosResponse<Post[]>> {
-    return this.httpService.get(this._URL).toPromise();
+  constructor() {
+    super();
+    this.baseURL = this._URL;
+  }
+  async findAll() {
+    const result = await this.get<Post[]>('/');
+    return result;
   }
 
-  findOne(id: number): Promise<AxiosResponse<Post>> {
-    return this.httpService.get(`${this._URL}/${id}`).toPromise();
+  async findOne(id: number) {
+    const result = await this.get<Post>(`/${id}`);
+    return result;
   }
 }

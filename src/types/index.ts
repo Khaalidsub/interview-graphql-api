@@ -1,4 +1,6 @@
 import { registerEnumType } from '@nestjs/graphql';
+import { CommentsService } from 'src/comments/comments.service';
+import { PostsService } from 'src/posts/posts.service';
 
 export interface IPost {
   userId: number;
@@ -27,3 +29,11 @@ registerEnumType(CommentSearch, {
   name: 'CommentSearch',
   description: 'Property Type of the comment to searched ',
 });
+export interface IDatasource {
+  postsAPI: PostsService;
+  commentsAPI: CommentsService;
+}
+// export const dataSources = {
+//   postsAPI: new PostsService(),
+//   // commentsAPI:new CommentsService()
+// };

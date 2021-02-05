@@ -3,10 +3,12 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { PostsModule } from './posts/posts.module';
 import { CommentsModule } from './comments/comments.module';
+import { PostsService } from './posts/posts.service';
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
+      dataSources: () => ({ postsAPI: new PostsService() }),
       include: [PostsModule, CommentsModule],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
