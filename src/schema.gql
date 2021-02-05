@@ -4,22 +4,47 @@
 
 type Post {
   """Id of the User"""
-  id: Int!
+  userId: Int!
 
   """Id of the Post"""
-  postId: Int!
+  id: Int!
 
-  """Name of the User"""
-  name: String!
-
-  """Email of the User"""
-  email: String!
+  """Title of the Post"""
+  title: String!
 
   """Body of the Post"""
+  body: String!
+}
+
+type Comment {
+  """Comment Id"""
+  id: Int!
+
+  """ Post Id"""
+  postId: Int!
+
+  """User Name of the Commenter"""
+  name: Int!
+
+  """Email of the Commenter"""
+  email: String!
+
+  """Text of the Comment"""
   body: String!
 }
 
 type Query {
   posts: [Post!]!
   post(id: Int!): Post!
+  comments: [Comment!]!
+  commentsBySearch(input: String, property: CommentSearch!): Comment!
+}
+
+"""Property Type of the comment to searched """
+enum CommentSearch {
+  id
+  postId
+  name
+  email
+  body
 }

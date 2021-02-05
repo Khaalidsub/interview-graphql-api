@@ -7,7 +7,7 @@ import { CommentsModule } from './comments/comments.module';
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      include: [PostsModule],
+      include: [PostsModule, CommentsModule],
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
     PostsModule,

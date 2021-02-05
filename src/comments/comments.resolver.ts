@@ -1,7 +1,7 @@
 import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { CommentSearch } from 'src/types';
+import { CommentSearch } from '../types';
 import { CommentsService } from './comments.service';
-
+import { Comment } from './entities/comment.entity';
 @Resolver(() => Comment)
 export class CommentsResolver {
   constructor(private readonly commentsService: CommentsService) {}
@@ -14,7 +14,8 @@ export class CommentsResolver {
   @Query(() => Comment, { name: 'commentsBySearch' })
   findBySearch(
     @Args('property', { type: () => CommentSearch }) query: CommentSearch,
-    @Args('input', { type: () => String }) input: string,
+    @Args('input', { type: () => String || Int, nullable: true })
+    input: string | number,
   ) {
     return this.commentsService.findSearch(query, input);
   }
