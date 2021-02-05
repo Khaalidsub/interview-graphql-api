@@ -1,3 +1,5 @@
+import { registerEnumType } from '@nestjs/graphql';
+
 export interface IPost {
   userId: number;
   id: number;
@@ -12,4 +14,16 @@ export interface IComment {
   email: string;
   body: string;
 }
-export interface IUser {}
+
+export enum CommentSearch {
+  id = 'id',
+  postId = 'postId',
+  name = 'name',
+  email = 'email',
+  body = 'body',
+}
+
+registerEnumType(CommentSearch, {
+  name: 'CommentSearch',
+  description: 'Property Type of the comment to searched ',
+});
