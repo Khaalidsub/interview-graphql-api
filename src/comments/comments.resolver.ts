@@ -1,7 +1,6 @@
-import { Args, Context, Int, Query, Resolver } from '@nestjs/graphql';
-import { paginateResults } from 'src/util';
+import { Args, Context, Query, Resolver } from '@nestjs/graphql';
+import { paginateResults } from '../util';
 import { CommentSearch, IDatasource } from '../types';
-import { CommentsService } from './comments.service';
 import { Comment, CommentsConnection } from './entities/comment.entity';
 @Resolver(() => Comment)
 export class CommentsResolver {

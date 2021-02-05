@@ -1,5 +1,5 @@
 import { Field, Int, ObjectType } from '@nestjs/graphql';
-import { IComment } from 'src/types';
+import { IComment } from '../../types';
 
 @ObjectType()
 export class Comment implements IComment {

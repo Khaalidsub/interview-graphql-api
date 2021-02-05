@@ -1,6 +1,5 @@
-import { HttpService, Injectable } from '@nestjs/common';
-import { CommentSearch } from 'src/types';
-import { AxiosResponse } from 'axios';
+import { Injectable } from '@nestjs/common';
+import { CommentSearch } from '../types';
 import { Comment } from './entities/comment.entity';
 import { RESTDataSource } from 'apollo-datasource-rest';
 @Injectable()

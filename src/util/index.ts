@@ -1,4 +1,4 @@
-import { pageItem } from 'src/types';
+import { pageItem } from '../types';
 
 export const paginateResults = ({
   after: cursor,

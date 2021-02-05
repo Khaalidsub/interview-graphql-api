@@ -1,6 +1,6 @@
 import { registerEnumType } from '@nestjs/graphql';
-import { CommentsService } from 'src/comments/comments.service';
-import { PostsService } from 'src/posts/posts.service';
+import { CommentsService } from '../comments/comments.service';
+import { PostsService } from '../posts/posts.service';
 
 export interface IPost {
   userId: number;
