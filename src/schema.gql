@@ -16,6 +16,13 @@ type Post {
   body: String!
 }
 
+type PostsConnection {
+  totlaCount: Int!
+  cursor: String
+  hasMore: Boolean!
+  posts: [Post!]!
+}
+
 type Comment {
   """Comment Id"""
   id: Int!
@@ -41,7 +48,7 @@ type CommentsConnection {
 }
 
 type Query {
-  posts: [Post!]!
+  posts(after: Float): PostsConnection!
   post(id: Int!): Post!
   comments(after: Float): CommentsConnection!
   commentsBySearch(after: Float, input: String!, CommentSearch: CommentSearch!): CommentsConnection!

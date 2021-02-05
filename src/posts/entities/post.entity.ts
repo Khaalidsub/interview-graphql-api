@@ -13,3 +13,15 @@ export class Post implements IPost {
   @Field(() => String, { description: 'Body of the Post' })
   body: string;
 }
+
+@ObjectType()
+export class PostsConnection {
+  @Field(() => Int)
+  totlaCount: number;
+  @Field(() => String, { nullable: true })
+  cursor?: string;
+  @Field(() => Boolean)
+  hasMore: boolean;
+  @Field(() => [Post])
+  posts: Post[];
+}
