@@ -24,7 +24,7 @@ type Comment {
   postId: Int!
 
   """User Name of the Commenter"""
-  name: Int!
+  name: String!
 
   """Email of the Commenter"""
   email: String!
@@ -37,7 +37,7 @@ type Query {
   posts: [Post!]!
   post(id: Int!): Post!
   comments: [Comment!]!
-  commentsBySearch(input: String, property: CommentSearch!): Comment!
+  commentsBySearch(input: String!, CommentSearch: CommentSearch!): [Comment!]!
 }
 
 """Property Type of the comment to searched """

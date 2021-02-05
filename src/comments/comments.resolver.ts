@@ -1,22 +1,22 @@
-import { Args, Int, Query, Resolver } from '@nestjs/graphql';
-import { CommentSearch } from '../types';
+import { Args, Context, Int, Query, Resolver } from '@nestjs/graphql';
+import { CommentSearch, IDatasource } from '../types';
 import { CommentsService } from './comments.service';
 import { Comment } from './entities/comment.entity';
 @Resolver(() => Comment)
 export class CommentsResolver {
-  constructor(private readonly commentsService: CommentsService) {}
+  constructor() {}
 
   @Query(() => [Comment], { name: 'comments' })
-  findAll() {
-    return this.commentsService.findAll();
+  findAll(@Context('dataSources') { commentsAPI }: IDatasource) {
+    return commentsAPI.findAll();
   }
 
-  @Query(() => Comment, { name: 'commentsBySearch' })
+  @Query(() => [Comment], { name: 'commentsBySearch' })
   findBySearch(
-    @Args('property', { type: () => CommentSearch }) query: CommentSearch,
-    @Args('input', { type: () => String || Int, nullable: true })
-    input: string | number,
+    @Args('CommentSearch', { type: () => CommentSearch }) search: CommentSearch,
+    @Args('input') input: string,
+    @Context('dataSources') { commentsAPI }: IDatasource,
   ) {
-    return this.commentsService.findSearch(query, input);
+    return commentsAPI.findSearch(input, search);
   }
 }
