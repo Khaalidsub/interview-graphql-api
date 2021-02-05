@@ -1,22 +1,49 @@
 import { Args, Context, Int, Query, Resolver } from '@nestjs/graphql';
+import { paginateResults } from 'src/util';
 import { CommentSearch, IDatasource } from '../types';
 import { CommentsService } from './comments.service';
-import { Comment } from './entities/comment.entity';
+import { Comment, CommentsConnection } from './entities/comment.entity';
 @Resolver(() => Comment)
 export class CommentsResolver {
   constructor() {}
 
-  @Query(() => [Comment], { name: 'comments' })
-  findAll(@Context('dataSources') { commentsAPI }: IDatasource) {
-    return commentsAPI.findAll();
+  @Query(() => CommentsConnection, { name: 'comments' })
+  async findAll(
+    @Context('dataSources') { commentsAPI }: IDatasource,
+    @Args('after', { nullable: true }) after: number,
+  ) {
+    const comments = await commentsAPI.findAll();
+    return this.paginateComments(comments, after);
   }
 
-  @Query(() => [Comment], { name: 'commentsBySearch' })
-  findBySearch(
+  @Query(() => CommentsConnection, { name: 'commentsBySearch' })
+  async findBySearch(
     @Args('CommentSearch', { type: () => CommentSearch }) search: CommentSearch,
     @Args('input') input: string,
+    @Args('after', { nullable: true }) after: number,
     @Context('dataSources') { commentsAPI }: IDatasource,
   ) {
-    return commentsAPI.findSearch(input, search);
+    const comments = await commentsAPI.findSearch(input, search);
+    return this.paginateComments(comments, after);
+  }
+
+  paginateComments(comments: Comment[], after: number) {
+    const paginateComments = paginateResults({
+      after: after,
+      pageSize: 20,
+      results: comments,
+    });
+    const commentsConnected = {
+      totlaCount: comments.length,
+      comments: paginateComments,
+      cursor: paginateComments.length
+        ? paginateComments[paginateComments.length - 1].id
+        : null,
+      hasMore: paginateComments.length
+        ? paginateComments[paginateComments.length - 1].id !==
+          comments[paginateComments.length]?.id
+        : false,
+    } as CommentsConnection;
+    return commentsConnected;
   }
 }

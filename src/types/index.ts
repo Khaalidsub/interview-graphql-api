@@ -33,7 +33,6 @@ export interface IDatasource {
   postsAPI: PostsService;
   commentsAPI: CommentsService;
 }
-// export const dataSources = {
-//   postsAPI: new PostsService(),
-//   // commentsAPI:new CommentsService()
-// };
+
+export type pageItem = IComment | IPost;
+export type pageItems = IComment[] | IPost[];

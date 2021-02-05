@@ -17,6 +17,7 @@ export class CommentsService extends RESTDataSource {
   }
   async findSearch(input: string, search: CommentSearch) {
     const result = await this.get<Comment[]>(`/`, {
+      per_page: 20,
       [search]: input,
     });
     return result;

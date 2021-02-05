@@ -14,3 +14,15 @@ export class Comment implements IComment {
   @Field(() => String, { description: 'Text of the Comment' })
   body: string;
 }
+
+@ObjectType()
+export class CommentsConnection {
+  @Field(() => Int)
+  totlaCount: number;
+  @Field(() => String, { nullable: true })
+  cursor?: string;
+  @Field(() => Boolean)
+  hasMore: boolean;
+  @Field(() => [Comment])
+  comments: Comment[];
+}

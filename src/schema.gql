@@ -33,11 +33,18 @@ type Comment {
   body: String!
 }
 
+type CommentsConnection {
+  totlaCount: Int!
+  cursor: String
+  hasMore: Boolean!
+  comments: [Comment!]!
+}
+
 type Query {
   posts: [Post!]!
   post(id: Int!): Post!
-  comments: [Comment!]!
-  commentsBySearch(input: String!, CommentSearch: CommentSearch!): [Comment!]!
+  comments(after: Float): CommentsConnection!
+  commentsBySearch(after: Float, input: String!, CommentSearch: CommentSearch!): CommentsConnection!
 }
 
 """Property Type of the comment to searched """
