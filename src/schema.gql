@@ -1,0 +1,25 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Post {
+  """Id of the User"""
+  id: Int!
+
+  """Id of the Post"""
+  postId: Int!
+
+  """Name of the User"""
+  name: String!
+
+  """Email of the User"""
+  email: String!
+
+  """Body of the Post"""
+  body: String!
+}
+
+type Query {
+  posts: [Post!]!
+  post(id: Int!): Post!
+}
